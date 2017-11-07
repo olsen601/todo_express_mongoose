@@ -6,10 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('express-flash');
 var session = require('express-session');
-
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 
 var db_url = process.env.MONGO_URL;
+
+mongoose.connect(db_url, { useMongoClient: true})
+  .then( () => { console.log('Connected to MongoDB') } )
+  .catch( (err) => {console.log('Error Connecting to MongoDB', err); });
+mongoose.promise = global.Promise;
 
 var index = require('./routes/index');
 
@@ -31,17 +35,6 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-MongoClient.connect(db_url).then( (db) => {
-/* => {} is a promise that resloves in a database call since it may take
-a while to connect similar to function(err, db){error handler code}*/
-
-  var tasks = db.collection('tasks');
-
-  app.use('/', function(req, res, next) {
-    req.tasks = tasks;
-    next();
-  });
-
   app.use('/', index);
 
   // catch 404 and forward to error handler
@@ -57,14 +50,12 @@ a while to connect similar to function(err, db){error handler code}*/
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+    if (err.kind === 'ObjectId' && err.name === 'CastError') {
+      err.status = 404;
+    }
     // render the error page
     res.status(err.status || 500);
     res.render('error');
   });
-
-}).catch((err) => {
-  console.log('Error connecting to MongoDB', err);
-  process.exit(-1);
-});
 
 module.exports = app;

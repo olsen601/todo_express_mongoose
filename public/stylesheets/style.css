@@ -51,6 +51,13 @@ a {
   border-radius: 10%;
 }
 
+.delete_done_button{
+  background-color: crimson;
+  color: white;
+  font-weight:bold;
+  border-radius: 10%;
+}
+
 .alldone {
   padding-top: 20px;
 }

@@ -2,7 +2,7 @@
 
 <div class="taskinfo">
 {{#if task.completed}}
-  <p>{{task.text}} is completed.</p>
+  <p>{{task.text}} is completed.<br>Created: {{task.dateCreated}} - Completed: {{task.dateCompleted}}<br></p>
 {{else}}
   <p>{{task.text}} is not yet completed.</p>
 
