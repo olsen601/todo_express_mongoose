@@ -10,10 +10,10 @@ var mongoose = require('mongoose');
 
 var db_url = process.env.MONGO_URL;
 
+mongoose.Promise = global.Promise;
 mongoose.connect(db_url, { useMongoClient: true})
   .then( () => { console.log('Connected to MongoDB') } )
   .catch( (err) => {console.log('Error Connecting to MongoDB', err); });
-mongoose.promise = global.Promise;
 
 var index = require('./routes/index');
 
