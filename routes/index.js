@@ -84,7 +84,9 @@ router.post('/done', function(req, res, next){
 
 router.post('/alldone', function(req, res, next) {
 
-  Task.updateMany( { completed : false } , { $set : { completed : true} } )
+  var date = new Date();
+
+  Task.updateMany( { completed : false } , { $set : { completed : true, dateCompleted: date} } )
     .then( (result) => {
       console.log("How many documents were modified? ", result.n);
       req.flash('info', 'All tasks marked as done!');
