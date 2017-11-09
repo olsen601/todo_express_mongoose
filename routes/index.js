@@ -44,7 +44,7 @@ router.get('/completed', function(req,res, next){
 
 router.post('/add', function(req, res, next) {
 
-var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
 
   if (!req.body || !req.body.text) {
     //no task text info, ignore and redirect to home page
@@ -67,7 +67,7 @@ var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
 
 router.post('/done', function(req, res, next){
 
-  var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
 
     Task.findOneAndUpdate( { _id : req.body._id}, { $set : { completed: true, dateCompleted: date}} )
       .then((updatedTask) => {
@@ -84,9 +84,9 @@ router.post('/done', function(req, res, next){
 
 router.post('/alldone', function(req, res, next) {
 
-  var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
+var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
 
-  Task.updateMany( { completed : false } , { $set : { completed : true, dateCompleted: date} } )
+  Task.updateMany( { completed : false } , { $set : { completed : true, dateCompleted: newdate} } )
     .then( (result) => {
       console.log("How many documents were modified? ", result.n);
       req.flash('info', 'All tasks marked as done!');
