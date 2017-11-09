@@ -44,7 +44,7 @@ router.get('/completed', function(req,res, next){
 
 router.post('/add', function(req, res, next) {
 
-var date = new Date();
+var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
 
   if (!req.body || !req.body.text) {
     //no task text info, ignore and redirect to home page
