@@ -67,7 +67,7 @@ var date = new Date();
 
 router.post('/done', function(req, res, next){
 
-  var date = new Date();
+  var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
 
     Task.findOneAndUpdate( { _id : req.body._id}, { $set : { completed: true, dateCompleted: date}} )
       .then((updatedTask) => {
@@ -84,7 +84,7 @@ router.post('/done', function(req, res, next){
 
 router.post('/alldone', function(req, res, next) {
 
-  var date = new Date();
+  var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago"});
 
   Task.updateMany( { completed : false } , { $set : { completed : true, dateCompleted: date} } )
     .then( (result) => {
