@@ -44,7 +44,7 @@ router.get('/completed', function(req,res, next){
 
 router.post('/add', function(req, res, next) {
 
-var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
+var date = new Date();
 
   if (!req.body || !req.body.text) {
     //no task text info, ignore and redirect to home page
@@ -67,7 +67,7 @@ var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour
 
 router.post('/done', function(req, res, next){
 
-var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
+var date = new Date();
 
     Task.findOneAndUpdate( { _id : req.body._id}, { $set : { completed: true, dateCompleted: date}} )
       .then((updatedTask) => {
@@ -84,7 +84,7 @@ var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour
 
 router.post('/alldone', function(req, res, next) {
 
-var date = new Date().toLocaleString("en-US", {timeZone: "America/Chicago", hour12: true, year: "numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"});
+var date = new Date();
 
   Task.updateMany( { completed : false } , { $set : { completed : true, dateCompleted: date} } )
     .then( (result) => {
