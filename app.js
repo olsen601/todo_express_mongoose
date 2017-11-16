@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var flash = require('express-flash');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var hbs = require('hbs');
+var helpers = require('./hbshelpers/helpers');
 
 var db_url = process.env.MONGO_URL;
 
@@ -22,6 +24,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerHelper(helpers);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
